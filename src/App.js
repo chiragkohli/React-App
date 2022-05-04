@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from'./App.css';
 import styled from 'styled-components';
 import Person from './Person/Person';
 import ErrorContainer from './ErrorContainer/ErrorContainer';
@@ -71,7 +71,7 @@ class App extends Component {
       );
     }
     return (
-      <div className='App'>
+      <div className={classes.App}>
         <h1>My First React Application</h1>
         <p>Hello Application!</p>
         <StyledButton

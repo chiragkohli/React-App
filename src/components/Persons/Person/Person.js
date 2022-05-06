@@ -1,5 +1,7 @@
 import React from 'react';
 import classes from'./Person.css';
+import Aux from '../../../hoc/Auxillary';
+import withClass from '../../../hoc/withClass';
 // import styled from 'styled-components';
 
 // const StyledDiv = styled.div`
@@ -15,13 +17,14 @@ import classes from'./Person.css';
 //     }
 // `;
 const person = (props) => {
+    console.log('Render Person');
     return (
-        <div className={classes.Person}>
+        <Aux>
             <p onClick={props.click}>I am {props.name} and I am {props.age} Years old!</p>
             <p>{props.children}</p>
             <input type='text' value={props.name} onChange={props.changed} />
-        </div>
-    )
+        </Aux>
+    );
 };
 
-export default person;
+export default withClass(person, classes.Person);

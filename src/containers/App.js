@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
-import classes from'./App.css';
-import styled from 'styled-components';
-import Person from './Person/Person';
-import ErrorContainer from './ErrorContainer/ErrorContainer';
-
-
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-    color: black;
-  },
-`;
+import classes from './App.css';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Auxillary';
 
 class App extends Component {
   state = {
@@ -54,33 +41,36 @@ class App extends Component {
   }
 
   render() {
+    console.log('Render app');
     let persons = null;
     if (this.state.isVisible) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return <ErrorContainer key={person.id}><Person
-              click={() => this.deletePersonhandler(index)}
-              name={person.name}
-              age={person.age}
-              changed={(event) => this.nameChangedHandler(event, person.id)} />
-            </ErrorContainer>
-            // changed={this.nameChangedHandler.bind(this, person.id)} />
-          })}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonhandler}
+            changed={this.nameChangedHandler} />
         </div>
       );
     }
     return (
-      <div className={classes.App}>
-        <h1>My First React Application</h1>
-        <p>Hello Application!</p>
-        <StyledButton
-          alt={this.state.isVisible}
-          onClick={this.togglePersonHandler}>Toggle Person!</StyledButton>
+      <Aux>
+        <Cockpit
+          showPersons={this.state.isVisible}
+          clicked={this.togglePersonHandler} />
         {persons}
-      </div>
+      </Aux>
     );
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(props, state);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('Did Mount');
   }
 }
 
-export default App;
+export default withClass(App, classes.App);

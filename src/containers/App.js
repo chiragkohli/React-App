@@ -4,6 +4,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Auxillary';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   state = {
@@ -14,6 +15,7 @@ class App extends Component {
       { id: '4', name: 'Gita', age: '29' },
     ],
     isVisible: false,
+    authenticated: false,
   };
 
   deletePersonhandler = (personIndex) => {
@@ -38,7 +40,9 @@ class App extends Component {
     this.setState({
       persons: persons
     });
-  }
+  };
+
+  loginHandler = () => this.setState({ authenticated: true });
 
   render() {
     console.log('Render app');
@@ -55,10 +59,12 @@ class App extends Component {
     }
     return (
       <Aux>
-        <Cockpit
-          showPersons={this.state.isVisible}
-          clicked={this.togglePersonHandler} />
-        {persons}
+        <AuthContext.Provider value={{ authenticated: this.state.authenticated, login: this.loginHandler }}>
+          <Cockpit
+            showPersons={this.state.isVisible}
+            clicked={this.togglePersonHandler} />
+          {persons}
+        </AuthContext.Provider>
       </Aux>
     );
   }

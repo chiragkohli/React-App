@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import AuthContext from '../../context/auth-context';
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt === 'true' ? 'red' : 'green'};
@@ -15,15 +16,17 @@ const StyledButton = styled.button`
 `;
 
 const cockpit = (props) => {
-    return (
-        <div>
-            <h1>My First React Application</h1>
-            <p>Hello Application!</p>
-            <StyledButton
-                alt={props.showPersons.toString()}
-                onClick={props.clicked}>Toggle Person!</StyledButton>
-        </div>
-    );
+  const context = useContext(AuthContext);
+  return (
+    <div>
+      <h1>My First React Application</h1>
+      <p>Hello Application!</p>
+      <StyledButton
+        alt={props.showPersons.toString()}
+        onClick={props.clicked}>Toggle Person!</StyledButton>
+      <button onClick={context.login}>Login</button>
+    </div>
+  );
 };
 
 export default cockpit;
